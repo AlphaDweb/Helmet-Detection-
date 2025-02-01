@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Helmet Detection</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  
+  <!-- Custom Styles -->
+  <style>
+    /* Global Styling */
+    body {
+      background: #121212;
+      font-family: "Poppins", sans-serif;
+      color: #ffffff;
+      text-align: center;
+    }
+
+    /* Header */
+    .header {
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: #ff6f61;
+      text-shadow: 0px 0px 8px rgba(255, 111, 97, 0.8);
+      animation: fadeInDown 1s ease-in-out;
+    }
+
+    .subhead {
+      font-size: 1.4rem;
+      color: #bbb;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Upload Button */
+    .btn-custom {
+      background: #ff3131;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1.2rem;
+      color: white;
+      border-radius: 30px;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0px 4px 15px rgba(255, 49, 49, 0.5);
+    }
+
+    .btn-custom:hover {
+      background: #ff0000;
+      transform: scale(1.08);
+      box-shadow: 0px 6px 20px rgba(255, 0, 0, 0.8);
+    }
+
+    /* Image Display */
+    .result-image {
+      max-width: 80%;
+      border-radius: 10px;
+      margin-top: 20px;
+      box-shadow: 0px 4px 15px rgba(255, 0, 0, 0.4);
+    }
+
+    /* Fine Slip */
+    .fine-slip {
+      background: #222;
+      padding: 15px;
+      border-radius: 10px;
+      color: #ff6f61;
+      font-weight: 600;
+      margin-top: 20px;
+      display: inline-block;
+      border: 2px solid #ff6f61;
+    }
+
+    .fine-slip h4 {
+      color: #fff;
+    }
+
+    /* Footer */
+    .footer {
+      background: #000;
+      color: #888;
+      padding: 15px;
+      font-size: 0.9rem;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header { font-size: 2rem; }
+      .subhead { font-size: 1.2rem; }
+      .btn-custom { font-size: 1rem; padding: 10px 18px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <div class="container mt-5">
+    <h1 class="header">Helmet Detection using AI</h1>
+    <h2 class="subhead">Ensuring Safety with Smart Technology</h2>
+  </div>
+
+  <!-- Upload Button -->
+  <div class="container mt-5">
+    <button class="btn btn-custom" id="uploadButton" type="button">
+      Choose an Image for Detection
+    </button>
+    <div class="mt-3 text-muted">Supported Formats: PNG, JPG, JPEG</div>
+    <form action="http://localhost:5000/predict" method="POST" enctype="multipart/form-data" id="form">
+      <input type="file" name="file" accept="image/*" style="display: none" id="fileInput">
+    </form>
+  </div>
+
+  <!-- Display Detection Result -->
+  <div class="container mt-5">
+    {% if image %}
+      <h2 class="font-weight-bold text-white">Detection Result</h2>
+      <img class="result-image" src="{{ image }}" alt="Detection Result">
+    {% endif %}
+  </div>
+
+  <!-- Fine Slip Section -->
+  <div class="container mt-5">
+    {% if receipt %}
+      <div class="fine-slip">
+        <h4>Fine Slip Generated</h4>
+        <p>The detected violation incurs a fine of ₹10,000.</p>
+        <a class="btn btn-danger" href="{{ receipt }}" download>Download Fine Slip</a>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Bootstrap JS and jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <!-- JavaScript for File Upload -->
+  <script>
+    const fileInput = document.getElementById("fileInput");
+    const uploadButton = document.getElementById("uploadButton");
+
+    uploadButton.addEventListener("click", () => {
+      fileInput.click();
+    });
+
+    fileInput.addEventListener("change", () => {
+      document.getElementById("form").submit();
+    });
+  </script>
+</body>
+
+</html>
