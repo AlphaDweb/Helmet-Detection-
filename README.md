@@ -4,7 +4,7 @@
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/supunsathsara/HelmetDetect.git
+   https://github.com/AlphaDweb/Helmet-Detection-.git
    ```
 
 2. Navigate to the project directory:
